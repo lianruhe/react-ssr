@@ -1,0 +1,91 @@
+{
+  "env": {
+    "development": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "ie10": true,
+            "chrome": 45
+          },
+          "uglify": true,
+        }],
+        "react"
+      ],
+      "plugins": [
+        "add-module-exports",
+        "syntax-dynamic-import",
+        "transform-class-properties",
+        "transform-decorators-legacy",
+        "transform-object-rest-spread",
+        "transform-runtime",
+        "react-hot-loader/babel",
+        [
+          "import",
+          {
+            "libraryName": "antd",
+            "style": true
+          }
+        ]
+       ],
+       "comments": false
+    },
+    "test": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "ie10": true,
+            "chrome": 45
+          },
+          "uglify": true,
+        }],
+        "react"
+      ],
+      "plugins": [
+        "add-module-exports",
+        "syntax-dynamic-import",
+        "transform-class-properties",
+        "transform-decorators-legacy",
+        "transform-object-rest-spread",
+        "transform-runtime",
+        "react-hot-loader/babel",
+        [
+          "import",
+          {
+            "libraryName": "antd",
+            "style": true
+          }
+        ]
+       ],
+       "comments": false
+    },
+    "production": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "ie10": true,
+            "chrome": 45
+          },
+          "uglify": true,
+        }],
+        "react"
+      ],
+      "plugins": [
+        "add-module-exports",
+        "syntax-dynamic-import",
+        "transform-class-properties",
+        "transform-decorators-legacy",
+        "transform-object-rest-spread",
+        "transform-runtime",
+        "react-hot-loader/babel",
+        [
+          "import",
+          {
+            "libraryName": "antd",
+            "style": true
+          }
+        ]
+       ],
+       "comments": false
+    }
+  }
+}
