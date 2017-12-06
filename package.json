@@ -1,0 +1,58 @@
+{
+  "name": "react-ssr",
+  "description": "React server side rendering",
+  "version": "0.0.1",
+  "scripts": {
+    "clean": "node ./cli/clean.js",
+    "compile": "cross-env NODE_ENV=production DEBUG=server* node ./cli/compile.js",
+    "dev": "cross-env NODE_ENV=development DEBUG=server* node ./cli/compile.js && node dist/server.bundle.js",
+    "watch": "cross-env NODE_ENV=development DEBUG=server* nodemon ./cli/watch.js",
+    "start": "npm run clean && npm run compile && node dist/server.bundle.js"
+  },
+  "author": "shanks <lianruhe2013@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lianruhe/koa-ssr.git"
+  },
+  "dependencies": {
+    "koa": "^2.2.0",
+    "koa-body": "^2.1.0",
+    "koa-compose": "^4.0.0",
+    "koa-logger": "^3.0.0",
+    "koa-router": "^7.2.1",
+    "koa-static": "^3.0.0",
+    "mongoose": "^4.11.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.14.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.24.1",
+    "cross-env": "^5.0.1",
+    "eslint": "^3.9.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-friendly-formatter": "^2.0.6",
+    "eslint-loader": "^1.3.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.3.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "nodemon": "^1.11.0",
+    "style-loader": "^0.13.1",
+    "stylelint": "^7.5.0",
+    "stylelint-config-standard": "^16.0.0",
+    "webpack": "^3.8.1",
+    "webpack-node-externals": "^1.6.0",
+    "yarg": "^1.0.8"
+  }
+}

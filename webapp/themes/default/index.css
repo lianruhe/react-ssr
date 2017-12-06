@@ -1,0 +1,62 @@
+@import "helpers";
+
+html, body {
+  overflow: hidden;
+}
+
+#app {
+  height: 100%;
+  overflow: hidden;
+
+  & #container {
+    height: 100%;
+    overflow: hidden;
+
+    & #progress {
+      /*display: none;*/
+      position: fixed;
+      z-index: 1001;
+      top: 0;
+      left: 0;
+
+      & .ant-progress-inner {
+        vertical-align: top;
+      }
+    }
+
+    & #wrapper {
+      height: 100%;
+      overflow: hidden;
+
+      & #main {
+        overflow: auto;
+        position: relative;
+
+        & #main-wrapper {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+        }
+      }
+    }
+  }
+
+  /* 登录页面 */
+  /*& #container.unauthed {
+    display: block;
+
+    & #wrapper {
+      position: static;
+      width: 400px;
+      height: auto;
+      margin: 250px auto auto;
+      box-shadow: 0 0 18px rgba(0, 0, 0, .3);
+
+      & #main {
+        position: static;
+      }
+    }
+  }*/
+}

@@ -1,79 +1,75 @@
-const koa = require('koa');
-const koaRouter = require('koa-router');
-const path = require('path');
-const reactview = require('./app/plugin/reactview/app.js');
-const Static = require('./app/middleware/static.js');
-const VERSION = require('./app/assets/package.json').version;
+// import path from 'path'
+import debug from 'debug'
+import Koa from 'koa'
+import middlewares from './middleware'
+// import router from './router'
+// import mount from 'koa-mount';
+// import graphQLHTTP from 'koa-graphql';
+// import convert from 'koa-convert';
+import serve from 'koa-static'
+import config from './config'
 
-const App = () => {
-  let app = koa();
-  let router = koaRouter();
-  let microdata = {
-    styleDomain: "//localhost:3000/assets/",
-    styleVersion: VERSION,
-  };
+const _debug = debug('server:server')
 
-  // 初始化 /home 路由 dispatch 的 generator
-  router.get(['/', '/home'], function* () {
-    // 执行 view 插件
-    this.body = this.render('Home', {
-      microdata: microdata,
-      mydata: {
-        nick: 'server render body'
-      }
-    }, true);
-  });
+// import * as middleware from './middleware'
+// import schema from './graphql'
+// import publish from './publish'
 
-  router.get('/device/:deviceID', function* () {
-    // 执行 view 插件
-    let deviceID = this.params.deviceID;
-    this.body = this.render('Device', {
-      isServer: true,
-      microdata: microdata,
-      mydata: {
-        path: this.path,
-        deviceID: deviceID,
-      },
-    }, false);
-  });
+/**
+ * ------------------------------------------
+ * mongodb
+ * ------------------------------------------
+ */
+// import './mongoose'
+// global.db = mongoose.createConnection('mongodb://localhost/koa-server')
 
-  app.use(router.routes()).use(router.allowedMethods());
+/**
+ * ------------------------------------------
+ * Koa
+ * ------------------------------------------
+ */
+const app = new Koa()
 
-  // 静态资源托管
-  app.use(Static({
-    staticOpts: {
-      router: '/assets',               // 路由映射
-      dir: `${__dirname}/app/assets`,  // 托管的目录
-      maxage: 1000 * 3600 * 24,        // 设置 maxage，默认缓存一天
-    },
-    app: app,
-  }));
+app.use(middlewares)
 
-  // 注入 reactview
-  const viewpath = path.join(__dirname, 'app/views');
-
-  app.config = {
-    reactview: {
-      viewpath: viewpath,             // the root directory of view files
-      doctype: '<!DOCTYPE html>',
-      extname: '.js',                 // view 层直接渲染文件名后缀
-      beautify: true,                 // 是否需要对 DOM 结构进行格式化
-      writeResp: false,               // 是否需要在 view 层直接输出
-    },
+app.use(async (ctx, next) => {
+  const { response, request } = ctx
+  response.append('Access-Control-Allow-Origin', request.origin)
+  response.append('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+  response.append('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS,TRACE')
+  response.append('Access-Control-Allow-Credentials', true)
+  if (request.method.toLocaleLowerCase() === 'options') {
+    ctx.status = 200
+  } else {
+    await next()
   }
-  reactview(app);
+})
 
-  return app;
-};
+app.use(serve(config.dir_public))
+app.use(require('./router').routes())
 
-const createApp = () => {
-  const app = App();
+// koa graphql
+// app.use(mount('/graphql', convert(graphQLHTTP({ schema, pretty: true }))));
 
-  app.listen(3000, () => {
-    console.log('3000 is listening!');
-  });
+// Publish service
+// app.use(mount('/publish', publish));
 
-  return app;
-};
+// if (config.globals.__DEV__) {
+// koa static
+// app.use(staticServer);
+//
+// const devMiddleware = require('./middleware/webpack-middleware').devMiddleware;
+// const hotMiddleware = require('./middleware/webpack-middleware').hotMiddleware;
+//
+// app.use(devMiddleware);
+// app.use(hotMiddleware);
+// }
 
-createApp();
+// server render
+// app.use(middleware.serverRender);
+//
+
+const PORT = config.server_port
+app.listen(PORT, () => {
+  _debug(`Server is running, port: ${PORT}`)
+})
