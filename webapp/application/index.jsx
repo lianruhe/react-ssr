@@ -13,21 +13,6 @@ import { Progress } from 'antd'
 
 import 'styles/index.css'
 
-const routeArray = []
-// 过滤出不用渲染的 route，整理成数组，后面 level 过滤也在这里做
-const filterRoute = arr => {
-  arr.forEach(route => {
-    const { module, from, to, subMenu } = route || {}
-    if (module || (from && to)) {
-      // level 过滤可以在这里操作
-      routeArray.push(route)
-    } else if (route.subMenu) {
-      filterRoute(route.subMenu)
-    }
-  })
-}
-filterRoute(routes)
-
 @connect(state => ({
   progress: state.core.progress,
 }))
@@ -47,7 +32,7 @@ export default class App extends React.Component {
             <Progress id="progress" percent={progress} showInfo={false} strokeWidth={3} />
           }
           <Switch>
-            {routeArray.map((route, index) => {
+            {routes.map((route, index) => {
               return (
                 <RouteAsync key={index} {...route} />
               )
