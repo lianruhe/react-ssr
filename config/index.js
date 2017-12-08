@@ -1,4 +1,6 @@
-import { resolve } from 'path'
+import {
+  resolve
+} from 'path'
 import _debug from 'debug'
 
 _debug('server:config:base')
@@ -14,7 +16,7 @@ const config = {
   path_base: resolve(__dirname, '../'),
   dir_src: 'src',
   dir_dist: 'dist',
-  dir_public: './public',
+  dir_public: './webapp/static',
 
   // ----------------------------------
   // Server Configuration

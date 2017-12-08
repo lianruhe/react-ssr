@@ -4,7 +4,7 @@ import { history } from 'store'
 import { ConnectedRouter } from 'react-router-redux'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 // import autobind from 'autobind-decorator'
 
 import RouteAsync from './route-async'
@@ -14,7 +14,7 @@ import { Progress } from 'antd'
 import 'styles/index.css'
 
 @connect(state => ({
-  progress: state.core.progress,
+  progress: state.core.progress
 }))
 export default class App extends React.Component {
   static propTypes = {

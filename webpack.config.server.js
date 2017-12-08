@@ -3,7 +3,7 @@ import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import nodeExternals from 'webpack-node-externals'
 
 import _debug from 'debug'
-import config from '../index'
+import config from './config'
 const { __PROD__ } = config.globals
 const debug = _debug('server:webpack')
 
@@ -20,7 +20,7 @@ const webpackConfig = {
   },
   resolve: {
     modules: [config.paths.base(), 'node_modules'],
-    extensions: ['.js', '.jsx', '.json', '.css']
+    extensions: ['.js', '.jsx', '.json', '.css', '.less']
     // alias: {
     //   'public': config.paths.public()
     // }
@@ -28,7 +28,7 @@ const webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
@@ -39,6 +39,43 @@ const webpackConfig = {
           limit: 10000,
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              plugins: function () {
+                return [
+                  require('postcss-import'),
+                  require('postcss-cssnext')({
+                    // features: {
+                    //   customProperties: {
+                    //     variables: require(paths.src(`themes/${config.theme}/variables.json`))
+                    //   }
+                    // }
+                  })
+                ]
+              }
+            }
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       },
       {
         test: /\.css$/,

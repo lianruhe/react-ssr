@@ -1,29 +1,29 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import { routerMiddleware } from 'react-router-redux'
-import createHistory from 'history/createHashHistory'
+// import { routerMiddleware } from 'react-router-redux'
+// import createHistory from 'history/createBrowserHistory'
 
-import persistState from 'redux-localstorage'
+// import persistState from 'redux-localstorage'
 import thunk from 'redux-thunk'
 import promise from 'redux-promise'
 import loggerMiddleware from 'redux-logger'
 // import requestErrorMiddleware from './middleware/requestErrorMiddleware'
 import rootReducer from './reducers'
 
-export const history = createHistory()
+// export const history = createHistory()
 
 export default (initialState = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [routerMiddleware(history), thunk, promise]
+  const middleware = [thunk, promise]
 
   // ======================================================
   // Store Enhancers
   // ======================================================
-  const enhancers = [persistState(['core'])]
+  const enhancers = []
 
   if (__DEV__) {
-    const devToolsExtension = window.devToolsExtension
+    const devToolsExtension = global.devToolsExtension
     if (typeof devToolsExtension === 'function') {
       enhancers.push(devToolsExtension())
     }

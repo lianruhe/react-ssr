@@ -3,39 +3,43 @@
   "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
-    "standard"
+    "standard",
+    "standard-react"
   ],
   "env": {
     "es6": true,
     "node": true,
     "browser": true
   },
-  "ecmaFeatures": {
-    "modules": true,
-    "jsx": true,
+  "parserOptions": {
+    "ecmaFeatures": {
+      "modules": true,
+      "jsx": true,
 
-    "arrowFunctions": true,
-    "binaryLiterals": true,
-    "blockBindings": true,
-    "classes": true,
-    "defaultParams": true,
-    "destructuring": true,
-    "forOf": true,
-    "generators": true,
-    "globalReturn": true,
-    "objectLiteralComputedProperties": true,
-    "objectLiteralDuplicateProperties": true,
-    "objectLiteralShorthandMethods": true,
-    "objectLiteralShorthandProperties": true,
-    "octalLiterals": true,
-    "regexUFlag": true,
-    "regexYFlag": true,
-    "spread": true,
-    "superInFunctions": true,
-    "templateStrings": true,
-    "unicodeCodePointEscapes": true
+      "arrowFunctions": true,
+      "binaryLiterals": true,
+      "blockBindings": true,
+      "classes": true,
+      "defaultParams": true,
+      "destructuring": true,
+      "forOf": true,
+      "generators": true,
+      "globalReturn": true,
+      "objectLiteralComputedProperties": true,
+      "objectLiteralDuplicateProperties": true,
+      "objectLiteralShorthandMethods": true,
+      "objectLiteralShorthandProperties": true,
+      "octalLiterals": true,
+      "regexUFlag": true,
+      "regexYFlag": true,
+      "spread": true,
+      "superInFunctions": true,
+      "templateStrings": true,
+      "unicodeCodePointEscapes": true
+    }
   },
   "plugins": [
+    "react",
     "import",
     "standard",
     "babel",
@@ -77,6 +81,9 @@
     "no-unexpected-multiline": 2,
     "no-undef": 2,
     "no-var": 2,
-    "no-warning-comments": 1
+    "no-warning-comments": 1,
+
+    "react/jsx-uses-react": 2,
+    "react/jsx-curly-spacing": 0
   }
 }

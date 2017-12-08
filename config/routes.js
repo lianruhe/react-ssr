@@ -15,10 +15,10 @@ export default [{
   path: '/home',
   module: 'home'
 },
-{
-  path: '/login',
-  module: 'login'
-},
+// {
+//   path: '/login',
+//   module: 'login'
+// },
 {
   module: '404',
   exact: false

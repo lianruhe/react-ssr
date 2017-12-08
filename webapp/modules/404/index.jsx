@@ -1,8 +1,7 @@
 import React from 'react'
-import pureRender from 'utils/pure-render'
-import { Icon } from 'antd'
-import 'styles/app/404.css'
-import { Link } from 'react-router-dom'
+// import { Icon } from 'antd'
+// import 'styles/app/404.css'
+// import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 const Error = ({ history }) => {
@@ -23,13 +22,13 @@ const Error = ({ history }) => {
       </div>
       <div className="operate">
         <a onClick={goback}>
-          <Icon type="arrow-left" />
+          {/* <Icon type="arrow-left" /> */}
           <span className="goback">go back</span>
         </a>
-        <Link to="/home">
+        {/* <Link to="/home">
           <span className="gohome">go to home</span>
           <Icon type="arrow-right" />
-        </Link>
+        </Link> */}
       </div>
     </div>
   )
@@ -39,4 +38,4 @@ Error.propTypes = {
   history: PropTypes.object
 }
 
-export default pureRender(Error)
+export default Error

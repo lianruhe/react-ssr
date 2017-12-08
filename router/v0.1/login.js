@@ -1,4 +1,4 @@
-import { AccountModel } from '../../../mongoose'
+import { AccountModel } from '../../mongoose'
 // import { loginError } from 'error/error'
 // import serverError from 'error/server-error'
 // import paramError from 'error/param-error'

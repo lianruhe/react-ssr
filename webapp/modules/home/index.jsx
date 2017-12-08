@@ -1,19 +1,18 @@
 import React from 'react'
-import Base from 'components/base'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setProgress, showProgress, hideProgress } from 'store/actions/core'
+import { setProgress, showProgress, hideProgress } from '../../store/actions/core'
 import { Row, Col } from 'antd'
-import 'styles/app/home.css'
+// import 'styles/app/home.css'
 
 @connect(state => ({
   progress: state.core.progress
 }), dispatch => ({
   ...bindActionCreators({ setProgress, showProgress, hideProgress }, dispatch)
 }))
-export default class Home extends Base {
+export default class Home extends React.PureComponent {
   static propTypes = {
     progress: PropTypes.number,
     setProgress: PropTypes.func,

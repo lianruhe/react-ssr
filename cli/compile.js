@@ -1,10 +1,10 @@
-require('babel-register')
+import('babel-register')
 
 const debug = require('debug')('server:compile')
 
 debug('Create webpack compiler.')
 
-require('webpack')(require('../config/webpack/webpack.config.server.js')).run((err, stats) => {
+require('webpack')(require('../webpack.config.server.js')).run((err, stats) => {
   const jsonStats = stats.toJson()
 
   debug('Webpack compile completed.')
