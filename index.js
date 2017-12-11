@@ -1,13 +1,14 @@
 // import path from 'path'
 import debug from 'debug'
 import Koa from 'koa'
+import render from 'koa-ejs'
 import middlewares from './middleware'
 // import router from './router'
 // import mount from 'koa-mount';
 // import graphQLHTTP from 'koa-graphql';
 // import convert from 'koa-convert';
 import serve from 'koa-static'
-import config from './config'
+import config, { paths } from './config'
 
 const _debug = debug('server:server')
 
@@ -28,6 +29,14 @@ const app = new Koa()
 
 app.use(middlewares)
 
+render(app, {
+  root: paths.dist()
+  // layout: 'template',
+  // viewExt: 'html',
+  // cache: false,
+  // debug: true
+})
+
 app.use(async (ctx, next) => {
   const { response, request } = ctx
   response.append('Access-Control-Allow-Origin', request.origin)
@@ -41,7 +50,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.use(serve(config.dir_public))
+app.use(serve(paths.dist()))
 app.use(require('./router').routes())
 
 const PORT = config.server_port

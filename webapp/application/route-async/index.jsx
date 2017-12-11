@@ -1,9 +1,8 @@
 import React from 'react'
-import Base from 'components/base'
 import { Redirect, Route } from 'react-router'
 import PropTypes from 'prop-types'
 
-export default class RouteAsync extends Base {
+export default class RouteAsync extends React.PureComponent {
   static propTypes = {
     module: PropTypes.string,
     path: PropTypes.string,
@@ -28,7 +27,7 @@ export default class RouteAsync extends Base {
   getComponent () {
     const { module } = this.props
     if (this.props.module && typeof this.props.module === 'string') {
-      import(`modules/${module}`)
+      import(`../../modules/${module}`)
         .then(component => {
           this.setState({
             component

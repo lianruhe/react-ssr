@@ -9,14 +9,15 @@ const config = {
   env: process.env.NODE_ENV || 'development',
 
   pkg: require('../package.json'),
+  // theme name
+  theme: 'default',
 
   // ----------------------------------
   // Project Structure
   // ----------------------------------
   path_base: resolve(__dirname, '../'),
-  dir_src: 'src',
+  dir_web: 'webapp',
   dir_dist: 'dist',
-  dir_public: './webapp/static',
 
   // ----------------------------------
   // Server Configuration
@@ -27,10 +28,21 @@ const config = {
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
-  // compiler_devtool: 'source-map',
-  // compiler_hash_type: 'hash',
-  // compiler_html_minify: false,
-  compiler_public_path: ''
+  compiler_devtool: 'source-map',
+  compiler_hash_type: 'hash',
+  compiler_html_minify: false,
+  compiler_public_path: '',
+  compiler_web_vendor: [
+    'react',
+    'react-dom',
+    'redux',
+    'react-redux',
+    'react-router',
+    'react-router-dom',
+    'prop-types',
+    'autobind-decorator',
+    'immutable'
+  ]
 }
 
 // ------------------------------------
@@ -39,7 +51,8 @@ const config = {
 config.globals = {
   'process.env.NODE_ENV': JSON.stringify(config.env),
   __DEV__: config.env === 'development',
-  __PROD__: config.env === 'production'
+  __PROD__: config.env === 'production',
+  __TEST__: config.env === 'test'
 }
 
 // ------------------------------------
@@ -51,7 +64,7 @@ config.paths = (() => {
 
   return {
     base,
-    src: base.bind(null, config.dir_src),
+    web: base.bind(null, config.dir_web),
     dist: base.bind(null, config.dir_dist)
   }
 })()

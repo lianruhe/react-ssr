@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import createStore from './store'
+// import { Provider } from 'react-redux'
+import createStore, { history } from './store'
 import { AppContainer } from 'react-hot-loader'
+import createApp from './application'
 
 // ========================================================
 // Store Instantiation
 // ========================================================
-const initialState = window.___INITIAL_STATE__
-const store = createStore(initialState)
+const store = createStore(window.___INITIAL_STATE__)
 
 // ========================================================
 // Render Setup
@@ -16,12 +16,9 @@ const store = createStore(initialState)
 const MOUNT_NODE = document.getElementById('app')
 
 const render = () => {
-  const App = require('application')
   ReactDOM.render(
     <AppContainer>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      { createApp(store, history) }
     </AppContainer>,
     MOUNT_NODE
   )

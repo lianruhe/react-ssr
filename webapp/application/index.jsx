@@ -1,30 +1,26 @@
 import React from 'react'
-import { Switch } from 'react-router'
-import { history } from 'store'
+import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
+import { Switch } from 'react-router'
 // import autobind from 'autobind-decorator'
 
-import RouteAsync from './route-async'
-import routes from 'routes'
 import { Progress } from 'antd'
+// import { history } from '../store'
+import RouteAsync from './route-async'
+import routes from '../../config/routes'
 
 import 'styles/index.css'
 
-@connect(state => ({
-  progress: state.core.progress
-}))
-export default class App extends React.Component {
-  static propTypes = {
-    progress: PropTypes.number
-  }
+export default (store, history) => {
+  // static propTypes = {
+  //   progress: PropTypes.number
+  // }
+  const state = store.getState()
+  const { core } = state || {}
+  const { progress } = core || {}
 
-  render () {
-    const { progress } = this.props
-
-    return (
+  return (
+    <Provider store={store}>
       <ConnectedRouter history={history}>
         <div id="container">
           {
@@ -40,6 +36,6 @@ export default class App extends React.Component {
           </Switch>
         </div>
       </ConnectedRouter>
-    )
-  }
+    </Provider>
+  )
 }

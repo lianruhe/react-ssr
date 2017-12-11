@@ -41,45 +41,8 @@ const webpackConfig = {
         }
       },
       {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-              plugins: function () {
-                return [
-                  require('postcss-import'),
-                  require('postcss-cssnext')({
-                    // features: {
-                    //   customProperties: {
-                    //     variables: require(paths.src(`themes/${config.theme}/variables.json`))
-                    //   }
-                    // }
-                  })
-                ]
-              }
-            }
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        test: /\.(css|less)$/,
+        loader: 'ignore-loader'
       }
     ]
   },

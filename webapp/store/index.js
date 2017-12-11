@@ -15,7 +15,13 @@ export default (initialState = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [thunk, promise]
+  const middleware = [
+    // routerMiddleware(history),
+    thunk,
+    promise
+  ]
+  // Now you can dispatch navigation actions from anywhere!
+  // store.dispatch(push('/foo'))
 
   // ======================================================
   // Store Enhancers

@@ -26,6 +26,11 @@
     </script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <%= htmlWebpackPlugin.options.html %>
+    </div>
+    <script>
+      window.___INITIAL_STATE__ = <%= htmlWebpackPlugin.options.reduxState %>
+    </script>
   </body>
 </html>
