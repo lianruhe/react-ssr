@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import { Provider } from 'react-redux'
+import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'react-router-redux'
 import createStore, { history } from './store'
 import { AppContainer } from 'react-hot-loader'
-import createApp from './application'
 
 // ========================================================
 // Store Instantiation
@@ -16,9 +16,14 @@ const store = createStore(window.___INITIAL_STATE__)
 const MOUNT_NODE = document.getElementById('app')
 
 const render = () => {
+  const App = require('./application')
   ReactDOM.render(
     <AppContainer>
-      { createApp(store, history) }
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </Provider>
     </AppContainer>,
     MOUNT_NODE
   )

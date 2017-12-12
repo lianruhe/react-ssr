@@ -48,7 +48,7 @@ const webpackConfig = {
   },
   externals: nodeExternals({
     // do not externalize CSS files in case we need to import it from a dep
-    whitelist: /\.css$/
+    // whitelist: /\.css$/
   }),
   plugins: [
     new webpack.DefinePlugin(config.globals)

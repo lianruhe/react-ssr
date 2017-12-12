@@ -30,8 +30,8 @@ const app = new Koa()
 app.use(middlewares)
 
 render(app, {
-  root: paths.dist()
-  // layout: 'template',
+  root: 'dist',
+  layout: 'index'
   // viewExt: 'html',
   // cache: false,
   // debug: true

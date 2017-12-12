@@ -3,8 +3,10 @@ import React from 'react'
 import Router from 'koa-router'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
+import { StaticRouter } from 'react-router'
 import pageRoutes from '../config/routes'
 import createStore from '../webapp/store'
+import App from '../webapp/application'
 const debug = require('debug')('server:router')
 
 // import os from 'os'
@@ -30,18 +32,34 @@ pageRoutes.forEach(route => {
   if (path && module) {
     router.get(path, async (ctx, next) => {
       // const makeup = await require('../webapp/modules/home')
-      console.log(ctx)
-      const Component = require(`../webapp/modules/${module}`)
-
+      // console.log(ctx)
+      // const Component = require(`../webapp/modules/${module}`)
+      const context = {}
       const bodyContent = renderToString(
         <Provider store={ createStore() }>
-          <Component />
+          <StaticRouter
+            location={path}
+            context={context}
+          >
+            <App />
+          </StaticRouter>
         </Provider>
       )
-      ctx.body = ctx.render('index', {
-        bodyContent,
-        reduxState: {}
-      })
+      console.log(path)
+      console.log(bodyContent)
+      console.log(context)
+
+      if (context.url) {
+        // Somewhere a `<Redirect>` was rendered
+        ctx.redirect(context.url)
+      } else {
+        // we're good, send the response
+        // ctx.body = ctx.render('index', {
+        //   bodyContent,
+        //   reduxState: {}
+        // })
+        ctx.body = bodyContent
+      }
     })
   }
 })
