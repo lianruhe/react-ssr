@@ -3,10 +3,10 @@ import React from 'react'
 import Router from 'koa-router'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
-import { StaticRouter } from 'react-router'
+// import { StaticRouter } from 'react-router'
 import pageRoutes from '../config/routes'
 import createStore from '../webapp/store'
-import App from '../webapp/application'
+import App from '../webapp/application/server-app'
 const debug = require('debug')('server:router')
 
 // import os from 'os'
@@ -35,18 +35,13 @@ pageRoutes.forEach(route => {
       // console.log(ctx)
       // const Component = require(`../webapp/modules/${module}`)
       const context = {}
-      const bodyContent = renderToString(
+      const markup = renderToString(
         <Provider store={ createStore() }>
-          <StaticRouter
-            location={path}
-            context={context}
-          >
-            <App />
-          </StaticRouter>
+          <App location={path} context={context} />
         </Provider>
       )
       console.log(path)
-      console.log(bodyContent)
+      console.log(markup)
       console.log(context)
 
       if (context.url) {
@@ -55,10 +50,10 @@ pageRoutes.forEach(route => {
       } else {
         // we're good, send the response
         // ctx.body = ctx.render('index', {
-        //   bodyContent,
+        //   markup,
         //   reduxState: {}
         // })
-        ctx.body = bodyContent
+        ctx.body = '<!doctype html><html><body><div id="app">' + markup + '</div></body></html>'
       }
     })
   }

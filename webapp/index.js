@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'react-router-redux'
-import createStore, { history } from './store'
+import createStore from './store'
 import { AppContainer } from 'react-hot-loader'
 
 // ========================================================
@@ -20,9 +19,7 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <App />
       </Provider>
     </AppContainer>,
     MOUNT_NODE
