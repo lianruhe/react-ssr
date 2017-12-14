@@ -3,10 +3,12 @@ import React from 'react'
 import Router from 'koa-router'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
-// import { StaticRouter } from 'react-router'
+import { StaticRouter, Switch, Route } from 'react-router'
 import pageRoutes from '../config/routes'
 import createStore from '../webapp/store'
-import App from '../webapp/application/server-app'
+// import App from '../webapp/application/server-app'
+import Home from '../webapp/modules/home'
+import NotFound from '../webapp/modules/404'
 const debug = require('debug')('server:router')
 
 // import os from 'os'
@@ -15,7 +17,7 @@ const debug = require('debug')('server:router')
 const router = new Router()
 
 // 整合所有后台服务接口
-const moduleContext = require.context('./', true, /^(?!index).*\.js$/)
+const moduleContext = require.context('./', true, /^((?!index)(?!webapp).)*\.js$/)
 moduleContext.keys().map(path => {
   const module = moduleContext(path)
 
@@ -37,7 +39,13 @@ pageRoutes.forEach(route => {
       const context = {}
       const markup = renderToString(
         <Provider store={ createStore() }>
-          <App location={path} context={context} />
+          {/* <App location={path} context={context} /> */}
+          <StaticRouter location={path} context={context}>
+            <Switch>
+              <Route path="/home" exact={false} component={Home} />
+              <Route exact={false} component={NotFound} />
+            </Switch>
+          </StaticRouter>
         </Provider>
       )
       console.log(path)
@@ -49,11 +57,11 @@ pageRoutes.forEach(route => {
         ctx.redirect(context.url)
       } else {
         // we're good, send the response
-        // ctx.body = ctx.render('index', {
-        //   markup,
-        //   reduxState: {}
-        // })
-        ctx.body = '<!doctype html><html><body><div id="app">' + markup + '</div></body></html>'
+        await ctx.render('index', {
+          markup,
+          reduxState: JSON.stringify({ core: { progress: 50 } })
+        })
+        // ctx.body = '<!doctype html><html><body><div id="app">' + markup + '</div></body></html>'
       }
     })
   }

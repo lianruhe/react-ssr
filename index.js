@@ -8,7 +8,7 @@ import middlewares from './middleware'
 // import graphQLHTTP from 'koa-graphql';
 // import convert from 'koa-convert';
 import serve from 'koa-static'
-import config, { paths } from './config'
+import config from './config'
 
 const _debug = debug('server:server')
 
@@ -30,7 +30,7 @@ const app = new Koa()
 app.use(middlewares)
 
 render(app, {
-  root: 'dist',
+  root: config.dir_dist,
   layout: 'index'
   // viewExt: 'html',
   // cache: false,
@@ -50,7 +50,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.use(serve(paths.dist()))
+app.use(serve(config.dir_dist))
 app.use(require('./router').routes())
 
 const PORT = config.server_port

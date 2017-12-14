@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-// import { routerMiddleware } from 'react-router-redux'
-// import createHistory from 'history/createBrowserHistory'
+import { routerMiddleware } from 'react-router-redux'
+import createBrowserHistory from 'history/createBrowserHistory'
+import createMemoryHistory from 'history/createMemoryHistory'
 
 // import persistState from 'redux-localstorage'
 import thunk from 'redux-thunk'
@@ -9,14 +10,14 @@ import loggerMiddleware from 'redux-logger'
 // import requestErrorMiddleware from './middleware/requestErrorMiddleware'
 import rootReducer from './reducers'
 
-// export const history = createHistory()
+export const history = __SERVER__ ? createMemoryHistory() : createBrowserHistory()
 
 export default (initialState = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
   const middleware = [
-    // routerMiddleware(history),
+    routerMiddleware(history),
     thunk,
     promise
   ]

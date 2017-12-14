@@ -1,14 +1,12 @@
 import React from 'react'
-import { StaticRouter, Switch } from 'react-router'
+import { StaticRouter, Switch, Route } from 'react-router'
 // import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // import { ConnectedRouter } from 'react-router-redux'
 // import autobind from 'autobind-decorator'
 
 import { Progress } from 'antd'
-// import { history } from '../store'
-import RouteAsync from './route-async'
-import routes from '../../config/routes'
+import Home from '../modules/home'
 
 // import 'styles/index.css'
 
@@ -33,11 +31,12 @@ export default class App extends React.PureComponent {
         }
         <StaticRouter location={location} context={context}>
           <Switch>
-            {routes.map((route, index) => {
+            {/* {routes.map((route, index) => {
               return (
                 <RouteAsync key={index} {...route} />
               )
-            })}
+            })} */}
+            <Route path="/home" exact={false} component={Home} />
           </Switch>
         </StaticRouter>
       </div>

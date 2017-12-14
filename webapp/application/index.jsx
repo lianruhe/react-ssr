@@ -10,7 +10,7 @@ import { history } from '../store'
 import RouteAsync from './route-async'
 import routes from '../../config/routes'
 
-// import 'styles/index.css'
+import 'styles/index.css'
 
 @connect(state => ({
   progress: state.core.progress

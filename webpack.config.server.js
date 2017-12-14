@@ -51,7 +51,10 @@ const webpackConfig = {
     // whitelist: /\.css$/
   }),
   plugins: [
-    new webpack.DefinePlugin(config.globals)
+    new webpack.DefinePlugin({
+      ...config.globals,
+      __SERVER__: JSON.stringify('true')
+    })
   ]
 }
 

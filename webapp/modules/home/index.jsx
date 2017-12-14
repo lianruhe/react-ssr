@@ -47,7 +47,7 @@ export default class Home extends React.PureComponent {
     return (
       <Row id="ui-home" type="flex" justify="center" align="middle">
         <Col>
-          <img src="static/images/home-welcome.jpg" width="300px" />
+          <img src="static/images/nopic.jpg" width="300px" />
           <span className="text">欢迎回来
             {/* <span className="text-a">运</span>
             <span className="text-b">行</span>
