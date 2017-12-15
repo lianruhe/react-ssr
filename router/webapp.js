@@ -1,27 +1,28 @@
 import React from 'react'
-import { StaticRouter, Switch, Route } from 'react-router'
-// import { connect } from 'react-redux'
+import { StaticRouter, Switch, Route, Redirect } from 'react-router'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-// import { ConnectedRouter } from 'react-router-redux'
-// import autobind from 'autobind-decorator'
 
 import { Progress } from 'antd'
-import Home from '../modules/home'
+// import createStore from '../webapp/store'
+// import App from '../webapp/application/server-app'
+import Home from '../webapp/modules/home'
+import NotFound from '../webapp/modules/404'
 
 // import 'styles/index.css'
 
-// @connect(state => ({
-//   progress: state.core.progress
-// }))
+@connect(state => ({
+  progress: state.core.progress
+}))
 export default class App extends React.PureComponent {
   static propTypes = {
     progress: PropTypes.number,
-    location: PropTypes.string,
+    path: PropTypes.string,
     context: PropTypes.object
   }
 
   render () {
-    const { progress, location, context } = this.props
+    const { progress, path, context } = this.props
 
     return (
       <div id="container">
@@ -29,14 +30,13 @@ export default class App extends React.PureComponent {
           progress > 0 && progress <= 100 &&
           <Progress id="progress" percent={progress} showInfo={false} strokeWidth={3} />
         }
-        <StaticRouter location={location} context={context}>
+        <StaticRouter location={path} context={context}>
           <Switch>
-            {/* {routes.map((route, index) => {
-              return (
-                <RouteAsync key={index} {...route} />
-              )
-            })} */}
+            <Redirect from="/" to="/home" exact />
             <Route path="/home" exact={false} component={Home} />
+            <Route path="/home" exact={false} component={Home} />
+            <Route path="/404" exact={false} component={NotFound} />
+            <Route exact={false} component={NotFound} />
           </Switch>
         </StaticRouter>
       </div>

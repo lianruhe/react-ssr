@@ -20,6 +20,6 @@ export default [{
 //   module: 'login'
 // },
 {
-  module: '404',
-  exact: false
+  path: '/404',
+  module: '404'
 }]

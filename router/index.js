@@ -3,12 +3,12 @@ import React from 'react'
 import Router from 'koa-router'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
-import { StaticRouter, Switch, Route } from 'react-router'
+// import { StaticRouter, Switch, Route } from 'react-router'
 import pageRoutes from '../config/routes'
 import createStore from '../webapp/store'
-// import App from '../webapp/application/server-app'
-import Home from '../webapp/modules/home'
-import NotFound from '../webapp/modules/404'
+import App from './webapp'
+// import Home from '../webapp/modules/home'
+// import NotFound from '../webapp/modules/404'
 const debug = require('debug')('server:router')
 
 // import os from 'os'
@@ -39,13 +39,13 @@ pageRoutes.forEach(route => {
       const context = {}
       const markup = renderToString(
         <Provider store={ createStore() }>
-          {/* <App location={path} context={context} /> */}
-          <StaticRouter location={path} context={context}>
+          <App path={path} context={context} />
+          {/* <StaticRouter location={path} context={context}>
             <Switch>
               <Route path="/home" exact={false} component={Home} />
               <Route exact={false} component={NotFound} />
             </Switch>
-          </StaticRouter>
+          </StaticRouter> */}
         </Provider>
       )
       console.log(path)
@@ -68,8 +68,7 @@ pageRoutes.forEach(route => {
 })
 
 router.get('*', async (ctx, next) => {
-  ctx.status = 404
-  ctx.body = 'not found'
+  ctx.redirect('/404')
 })
 
 export default router
