@@ -4,7 +4,7 @@ const debug = require('debug')('server:compile')
 
 debug('Create webpack compiler.')
 
-require('webpack')(require('../webpack.config.web.js')).run((err, stats) => {
+require('webpack')(require('../webpack.config.babel.js')).run((err, stats) => {
   const jsonStats = stats.toJson()
 
   debug('Webpack compile completed.')

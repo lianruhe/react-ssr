@@ -4,10 +4,12 @@
     "js": "node --harmony"
   },
   "ignore": [
+    ".git",
     "cli",
     "dist",
     "node_modules",
+    "webapp",
     "package.json",
-    "webapp"
+    "README.md"
   ]
 }

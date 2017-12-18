@@ -5,23 +5,33 @@ React server side rendering
 ## Usage
 
 ```bash
-# 安装依赖包
-npm install
+# install dependencies
+$ npm install
 
-# 清除打包目录
-npm run clean
+# run server
+$ npm start
+```
 
-# 打包
-npm run compile
+## Development
 
-# 开启服务（监听模式）
-npm run watch
+### webapp development
 
-# 开启服务（development）
-npm run dev
+```bash
 
-# 开启服务（production）
-npm run start
+$ npm run dev:web
+
+```
+
+### server development
+
+```bash
+
+# build webapp
+$ npm run build
+
+# server start
+$ npm run dev
+
 ```
 
 ## License

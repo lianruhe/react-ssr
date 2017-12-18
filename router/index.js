@@ -37,8 +37,9 @@ pageRoutes.forEach(route => {
       // console.log(ctx)
       // const Component = require(`../webapp/modules/${module}`)
       const context = {}
+      const store = createStore()
       const markup = renderToString(
-        <Provider store={ createStore() }>
+        <Provider store={store}>
           <App path={path} context={context} />
           {/* <StaticRouter location={path} context={context}>
             <Switch>
@@ -48,9 +49,10 @@ pageRoutes.forEach(route => {
           </StaticRouter> */}
         </Provider>
       )
-      console.log(path)
-      console.log(markup)
-      console.log(context)
+      // console.log(path)
+      // console.log(markup)
+      // console.log(context)
+      console.log(store.getState())
 
       if (context.url) {
         // Somewhere a `<Redirect>` was rendered
@@ -59,9 +61,8 @@ pageRoutes.forEach(route => {
         // we're good, send the response
         await ctx.render('index', {
           markup,
-          reduxState: JSON.stringify({ core: { progress: 50 } })
+          reduxState: JSON.stringify(store.getState())
         })
-        // ctx.body = '<!doctype html><html><body><div id="app">' + markup + '</div></body></html>'
       }
     })
   }

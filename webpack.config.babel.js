@@ -113,7 +113,7 @@ const webpackConfig = {
   devtool: config.compiler_devtool,
   devServer: {
     host: config.server_host,
-    port: config.server_port,
+    port: config.web_port,
     // proxy is useful for debugging
     // proxy: {
     //   '/api': 'http://127.0.0.1:4040'
@@ -195,8 +195,8 @@ const webpackConfig = {
       filename: 'index.html',
       template: paths.web('index.html'),
       title: `${config.pkg.name} - ${config.pkg.description}`,
-      bodyContent: '',
-      reduxState: undefined,
+      markup: __PROD__ ? '<%- markup %>' : '',
+      reduxState: __PROD__ ? '<%- reduxState %>' : 'undefined',
       hash: false,
       inject: true,
       minify: {

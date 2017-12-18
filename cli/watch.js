@@ -31,9 +31,7 @@ require('webpack')(require('../webpack.config.server.js')).run((err, stats) => {
       debug('No errors or warnings encountered.')
     }
 
-    if (config.env === 'development') {
-      debug('server restart!!')
-      require(config.paths.dist('server.bundle.js'))
-    }
+    debug('Server starting!!!')
+    require(config.paths.dist('server.bundle.js'))
   }
 })

@@ -4,11 +4,12 @@
   "version": "0.0.1",
   "scripts": {
     "clean": "node ./cli/clean.js",
-    "compile:server": "cross-env NODE_ENV=production DEBUG=server* node ./cli/compile-server.js",
-    "compile:web": "cross-env NODE_ENV=production DEBUG=server* node ./cli/compile-web.js",
-    "dev": "cross-env NODE_ENV=development DEBUG=server* node ./cli/compile-server.js && node dist/server.bundle.js",
-    "watch": "cross-env NODE_ENV=development DEBUG=server* nodemon ./cli/watch.js",
-    "start": "npm run clean && npm run compile && node dist/server.bundle.js"
+    "compile:web": "cross-env NODE_ENV=production DEBUG=app* node ./cli/compile-web.js",
+    "dev:web": "cross-env NODE_ENV=development DEBUG=app* nodemon --exec webpack-dev-server --progress",
+    "build": "npm run clean && npm run compile:web",
+    "compile": "cross-env NODE_ENV=server DEBUG=server* node ./cli/compile-server.js",
+    "dev": "cross-env NODE_ENV=server DEBUG=server* nodemon ./cli/watch.js",
+    "start": "npm run build && npm run compile && node dist/server.bundle.js"
   },
   "author": "shanks <lianruhe2013@gmail.com>",
   "license": "MIT",
@@ -84,6 +85,7 @@
     "stylelint": "^8.3.1",
     "stylelint-config-standard": "^18.0.0",
     "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.7",
     "webpack-node-externals": "^1.6.0",
     "yargs": "^10.0.3"
   }

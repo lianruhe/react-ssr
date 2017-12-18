@@ -3,7 +3,7 @@ import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import nodeExternals from 'webpack-node-externals'
 
 import _debug from 'debug'
-import config from './config'
+import config, { paths } from './config'
 const { __PROD__ } = config.globals
 const debug = _debug('server:webpack')
 
@@ -20,10 +20,10 @@ const webpackConfig = {
   },
   resolve: {
     modules: [config.paths.base(), 'node_modules'],
-    extensions: ['.js', '.jsx', '.json', '.css', '.less']
-    // alias: {
-    //   'public': config.paths.public()
-    // }
+    extensions: ['.js', '.jsx', '.json', '.css', '.less'],
+    alias: {
+      styles: paths.web(`themes/${config.theme}`)
+    }
   },
   module: {
     rules: [
@@ -51,10 +51,7 @@ const webpackConfig = {
     // whitelist: /\.css$/
   }),
   plugins: [
-    new webpack.DefinePlugin({
-      ...config.globals,
-      __SERVER__: JSON.stringify('true')
-    })
+    new webpack.DefinePlugin(config.globals)
   ]
 }
 

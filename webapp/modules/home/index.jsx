@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setProgress, showProgress, hideProgress } from '../../store/actions/core'
 import { Row, Col } from 'antd'
-// import 'styles/app/home.css'
+
+import 'styles/app/home.css'
 
 @connect(state => ({
   progress: state.core.progress
@@ -18,6 +19,10 @@ export default class Home extends React.PureComponent {
     setProgress: PropTypes.func,
     showProgress: PropTypes.func,
     hideProgress: PropTypes.func
+  }
+
+  componentWillMount () {
+    this.props.setProgress(30)
   }
 
   @autobind

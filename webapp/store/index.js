@@ -1,5 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
+import createHashHistory from 'history/createHashHistory'
 import createBrowserHistory from 'history/createBrowserHistory'
 import createMemoryHistory from 'history/createMemoryHistory'
 
@@ -10,7 +11,7 @@ import loggerMiddleware from 'redux-logger'
 // import requestErrorMiddleware from './middleware/requestErrorMiddleware'
 import rootReducer from './reducers'
 
-export const history = __SERVER__ ? createMemoryHistory() : createBrowserHistory()
+export const history = __SERVER__ ? createMemoryHistory() : __PROD__ ? createBrowserHistory() : createHashHistory()
 
 export default (initialState = {}) => {
   // ======================================================
@@ -29,8 +30,8 @@ export default (initialState = {}) => {
   // ======================================================
   const enhancers = []
 
-  if (__DEV__) {
-    const devToolsExtension = global.devToolsExtension
+  if (!__SERVER__ && __DEV__) {
+    const devToolsExtension = window.devToolsExtension
     if (typeof devToolsExtension === 'function') {
       enhancers.push(devToolsExtension())
     }

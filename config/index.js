@@ -23,7 +23,8 @@ const config = {
   // Server Configuration
   // ----------------------------------
   server_host: '0.0.0.0', // binds to all hosts
-  server_port: process.env.PORT || 8001,
+  server_port: process.env.PORT || 8000,
+  web_port: process.env.PORT || 8001,
 
   // ----------------------------------
   // Compiler Configuration
@@ -52,6 +53,7 @@ config.globals = {
   'process.env.NODE_ENV': JSON.stringify(config.env),
   __DEV__: config.env === 'development',
   __PROD__: config.env === 'production',
+  __SERVER__: config.env === 'server',
   __TEST__: config.env === 'test'
 }
 
