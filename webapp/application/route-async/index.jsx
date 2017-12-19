@@ -5,26 +5,18 @@ import PropTypes from 'prop-types'
 export default class RouteAsync extends React.PureComponent {
   static propTypes = {
     module: PropTypes.string,
-    path: PropTypes.string,
     from: PropTypes.string,
-    to: PropTypes.string,
-    exact: PropTypes.bool
+    to: PropTypes.string
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      component: undefined
+      component: null
     }
   }
-  //
-  // componentWillMount () {
-  //   // 设置 pathname
-  //   const { setPathname, asidePath, path } = this.props
-  //   setPathname(asidePath || path)
-  // }
 
-  getComponent () {
+  componentWillMount () {
     const { module } = this.props
     if (this.props.module && typeof this.props.module === 'string') {
       import(`../../modules/${module}`)
@@ -41,31 +33,25 @@ export default class RouteAsync extends React.PureComponent {
   }
 
   render () {
-    const { from, to, path, exact = true } = this.props
+    const { from, to } = this.props
 
-    // 重定向
-    if (from && to) {
-      return (
-        <Redirect from={from} to={to} />
-      )
-    }
-    //
     // if (!authorized && path !== '/login') {
     //   return (
-    //     <Redirect exact="false" from={path} to="/login" />
+    //     <Redirect exact="false" to="/login" />
     //   )
     // }
 
-    const { component } = this.state
-    const render = props => {
-      if (!component) {
-        this.getComponent()
-      }
-      return component ? React.createElement(component, props) : null
+    // 重定向
+    if (from || to) {
+      return (
+        <Redirect {...this.props} />
+      )
     }
 
+    const { component } = this.state
+
     return (
-      <Route path={path} exact={exact} render={render} />
+      <Route {...this.props} component={component} />
     )
   }
 }

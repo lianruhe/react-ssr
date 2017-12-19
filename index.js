@@ -50,7 +50,8 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.use(serve(config.dir_dist))
+// 先匹配静态资源，允许任何下游接口中间件首先响应
+app.use(serve(config.dir_dist, { defer: true }))
 app.use(require('./router').routes())
 
 const PORT = config.server_port

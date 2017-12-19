@@ -4,22 +4,23 @@
  *  module  [string]    哪个模块
  *  from    [string]    重定向始
  *  to      [string]    重定向到
- *  exact   [bool]      绝对匹配
+ *  exact   [bool]      绝对匹配，默认是 true
  */
 
 export default [{
-  from: '/',
-  to: '/home',
-  exact: true // 重定向
-}, {
   path: '/home',
   module: 'home'
 },
-// {
-//   path: '/login',
-//   module: 'login'
-// },
+{
+  from: '/',
+  to: '/home',
+  exact: true
+},
 {
   path: '/404',
   module: '404'
+},
+{
+  module: '404',
+  exact: false
 }]

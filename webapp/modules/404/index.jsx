@@ -1,6 +1,6 @@
 import React from 'react'
 // import { Icon } from 'antd'
-// import 'styles/app/404.css'
+import 'styles/app/404.css'
 // import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 

@@ -1,18 +1,10 @@
-// import fs from 'fs'
 import React from 'react'
 import Router from 'koa-router'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
-// import { StaticRouter, Switch, Route } from 'react-router'
-import pageRoutes from '../config/routes'
 import createStore from '../webapp/store'
 import App from './webapp'
-// import Home from '../webapp/modules/home'
-// import NotFound from '../webapp/modules/404'
 const debug = require('debug')('server:router')
-
-// import os from 'os'
-// import path from 'path'
 
 const router = new Router()
 
@@ -29,47 +21,62 @@ moduleContext.keys().map(path => {
 })
 
 // 前端页面渲染
-pageRoutes.forEach(route => {
-  const { path, module } = route
-  if (path && module) {
-    router.get(path, async (ctx, next) => {
-      // const makeup = await require('../webapp/modules/home')
-      // console.log(ctx)
-      // const Component = require(`../webapp/modules/${module}`)
-      const context = {}
-      const store = createStore()
-      const markup = renderToString(
-        <Provider store={store}>
-          <App path={path} context={context} />
-          {/* <StaticRouter location={path} context={context}>
-            <Switch>
-              <Route path="/home" exact={false} component={Home} />
-              <Route exact={false} component={NotFound} />
-            </Switch>
-          </StaticRouter> */}
-        </Provider>
-      )
-      // console.log(path)
-      // console.log(markup)
-      // console.log(context)
-      console.log(store.getState())
-
-      if (context.url) {
-        // Somewhere a `<Redirect>` was rendered
-        ctx.redirect(context.url)
-      } else {
-        // we're good, send the response
-        await ctx.render('index', {
-          markup,
-          reduxState: JSON.stringify(store.getState())
-        })
-      }
-    })
-  }
-})
+// pageRoutes.forEach(route => {
+//   const { path, module } = route
+//   if (path && module) {
+//     router.get(path, async (ctx, next) => {
+//       // console.log(ctx)
+//       const context = {}
+//       const store = createStore()
+//       const markup = renderToString(
+//         <Provider store={store}>
+//           <App path={path} context={context} />
+//         </Provider>
+//       )
+//       // console.log(path)
+//       // console.log(markup)
+//       // console.log(context)
+//       console.log(store.getState())
+//
+//       if (context.url) {
+//         ctx.redirect(context.url)
+//       } else {
+//         await ctx.render('index', {
+//           markup,
+//           reduxState: JSON.stringify(store.getState())
+//         })
+//       }
+//     })
+//   }
+// })
 
 router.get('*', async (ctx, next) => {
-  ctx.redirect('/404')
+  const { originalUrl } = ctx
+  // 获取文件则直接 next
+  if (/.*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css|json|woff2|woff|eot|svg|ttf)$/.test(originalUrl)) {
+    next()
+  } else {
+    const context = {}
+    const store = createStore()
+    const markup = renderToString(
+      <Provider store={store}>
+        <App path={originalUrl} context={context} />
+      </Provider>
+    )
+
+    // console.log(context)
+    // console.log(ctx.originalUrl)
+    // console.log(store.getState())
+
+    if (context.url) {
+      ctx.redirect(context.url)
+    } else {
+      await ctx.render('index', {
+        markup,
+        reduxState: JSON.stringify(store.getState())
+      })
+    }
+  }
 })
 
 export default router

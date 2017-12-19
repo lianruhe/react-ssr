@@ -31,11 +31,13 @@ export default class App extends React.PureComponent {
             <Progress id="progress" percent={progress} showInfo={false} strokeWidth={3} />
           }
           <Switch>
-            {routes.map((route, index) => {
-              return (
-                <RouteAsync key={index} {...route} />
-              )
-            })}
+            {
+              routes.map((route, index) => {
+                return (
+                  <RouteAsync key={index} {...route} />
+                )
+              })
+            }
           </Switch>
         </div>
       </ConnectedRouter>

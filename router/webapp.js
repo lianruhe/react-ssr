@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { Progress } from 'antd'
+// import routes from '../config/routes'
+// import RouteAsync from '../webapp/application/route-async'
 import Home from '../webapp/modules/home'
 import NotFound from '../webapp/modules/404'
 
@@ -28,10 +30,17 @@ export default class App extends React.PureComponent {
             <Progress id="progress" percent={progress} showInfo={false} strokeWidth={3} />
           }
           <Switch>
-            <Redirect from="/" to="/home" exact />
-            <Route path="/home" exact={false} component={Home} />
-            <Route path="/404" exact={false} component={NotFound} />
-            <Route exact={false} component={NotFound} />
+            <Redirect from="/" to="/home" exact strict />
+            <Route path="/home" component={Home} />
+            <Route path="/404" component={NotFound} />
+            <Route component={NotFound} />
+            {/* {
+              routes.map((route, index) => {
+                return (
+                  <RouteAsync key={index} {...route} />
+                )
+              })
+            } */}
           </Switch>
         </div>
       </StaticRouter>
