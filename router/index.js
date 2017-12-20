@@ -52,8 +52,8 @@ moduleContext.keys().map(path => {
 
 router.get('*', async (ctx, next) => {
   const { originalUrl } = ctx
-  // 获取文件则直接 next
-  if (/.*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css|json|woff2|woff|eot|svg|ttf)$/.test(originalUrl)) {
+  // 文件则直接 next
+  if (/.*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css|json|map|woff2|woff|eot|svg|ttf)$/.test(originalUrl)) {
     next()
   } else {
     const context = {}
@@ -64,8 +64,8 @@ router.get('*', async (ctx, next) => {
       </Provider>
     )
 
-    // console.log(context)
-    // console.log(ctx.originalUrl)
+    console.log(context)
+    console.log(markup)
     // console.log(store.getState())
 
     if (context.url) {
